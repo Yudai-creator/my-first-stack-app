@@ -41,6 +41,8 @@
     (begin
         (try! (stx-transfer? price tx-sender receiver-address))
 
+        ;; to avoid check-checker untrusted data notification
+        ;; #[allow(unchecked_data)]
         (map-set messages tx-sender message )
 
         (var-set total-sups (+ (var-get total-sups) u1))
