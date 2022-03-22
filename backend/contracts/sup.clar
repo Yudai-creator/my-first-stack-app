@@ -9,7 +9,7 @@
 
 ;; constants
 
-(define-constant reciever-address 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)
+(define-constant receiver-address 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)
 
 ;;
 
@@ -25,11 +25,28 @@
 
 ;; public functions
 
+;; a getter function to get total sups
 (define-read-only (get-sups)
     (var-get total-sups)
 )
 
+;; function to retrieve values from a map
+(define-read-only (get-message (who principal))
+    (map-get? messages who)
+)
 
-    
+;; function to handle how to write the message and transfer stx
+
+(define-public (write-sup (message (string-utf8 500)) (price uint))
+    (begin
+        (try! (stx-transfer? price tx-sender receiver-address))
+
+        (map-set messages tx-sender message )
+
+        (var-set total-sups (+ (var-get total-sups) u1))
+
+        (ok "Sup written successfully")
+    )
+)
 
 ;;
