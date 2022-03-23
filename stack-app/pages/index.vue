@@ -20,7 +20,14 @@
 </template>
 
 <script>
+
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 export default {
+
+  created() {
+    const appConfig = new AppConfig(['publish_data']);
+    const userSession = new UserSession({ appConfig });
+  },
 
       // <Head>
       //   <title>Sup</title>
